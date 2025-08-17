@@ -2,13 +2,15 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/database.js";
+import bcrypt from "bcrypt";
+import todoRouter from "./routes/TodoRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello Dipika!");
-});
+app.use(express.json());
+
+app.use("/todo", todoRouter);
 
 try {
   await connectDB();
