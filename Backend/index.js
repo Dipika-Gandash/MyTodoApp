@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/database.js";
 import bcrypt from "bcrypt";
+import cookieParser from "cookie-parser";
 import todoRouter from "./routes/TodoRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 
@@ -10,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/todo", todoRouter);
 app.use("/user", userRouter);
