@@ -25,12 +25,12 @@ const userSchema = new mongoose.Schema(
       minlength: [6, "password must be at least 6 characters long"],
       validate: {
         validator: function (value) {
-          return /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+          return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{6,}$/.test(
             value
           );
         },
         message:
-          "Password must contain at least 1 uppercase letter, 1 number, and 1 special character",
+          "Password must be at least 6 characters and include uppercase, lowercase, number, and special character",
       },
     },
   },
@@ -38,20 +38,19 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", function (next) {
-    if(this.email){
-        this.email = this.email.toLowerCase();
-    }
+  if (this.email) {
+    this.email = this.email.toLowerCase();
+  }
 
-    next();
-})
+  next();
+});
 
-
-userSchema.pre("save", async function(next){
-    if(this.password){
-        this .password = await bcrypt.hash(this.password, 10);
-    }
-    next();
-})
+userSchema.pre("save", async function (next) {
+  if (this.password) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
 
 const User = mongoose.model("User", userSchema);
 
