@@ -4,6 +4,7 @@ dotenv.config();
 import connectDB from "./config/database.js";
 import bcrypt from "bcrypt";
 import todoRouter from "./routes/TodoRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use("/todo", todoRouter);
+app.use("/user", userRouter);
+
 
 try {
   await connectDB();

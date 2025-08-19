@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Validator from "validator";
-
+import bcrypt from "bcrypt";
 const userSchema = new mongoose.Schema(
   {
     userName: {
@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema(
       minlength: [6, "password must be at least 6 characters long"],
       validate: {
         validator: function (value) {
-          // Regex: at least 1 uppercase, 1 number, 1 special char
           return /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
             value
           );
