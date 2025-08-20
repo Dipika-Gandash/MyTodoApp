@@ -183,3 +183,9 @@ export const updatePassword = async (req, res) => {
       .json({ message: "Server Error", error: error.message });
   }
 };
+
+
+export const logout = async (req, res) => {
+   res.clearCookie("token", { httpOnly: true});
+   return res.status(200).json({ message: "Logged out successfully" });
+}
