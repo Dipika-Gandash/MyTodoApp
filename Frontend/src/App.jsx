@@ -1,24 +1,34 @@
-import React from "react"
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter , Route, Routes} from "react-router-dom";
-import Home from "./components/Home"
-import Login from "./components/Login"
-import Signup from "./components/Signup"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./components/Home.jsx";
+import Signup from "./pages/Signup.jsx";
 import PageNotFound from "./components/PageNotFound";
-
+import Login from "./pages/Login.jsx";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
-  )
+  const [user, setUser] = useState(null); 
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home user={user} /> 
+    },
+    {
+      path: "/signup",
+      element: <Signup setUser={setUser} />
+    },
+    {
+      path: "/login",
+      element: <Login setUser={setUser}/>
+    },
+    {
+      path: "*",
+      element: <PageNotFound />
+    }
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
-export default App
-// rONgeJZWzgiCnSOk
+export default App;
